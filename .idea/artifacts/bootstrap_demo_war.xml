@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="bootstrap_demo:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>bootstrap_demo</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="springmvc_demo1.war">
+      <element id="artifact" artifact-name="bootstrap_demo:war exploded" />
+    </root>
+  </artifact>
+</component>

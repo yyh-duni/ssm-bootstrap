@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.mapper.BookMapper">
+  <resultMap id="BaseResultMap" type="com.aaa.pojo.BookVo">
+    <id column="bookId" jdbcType="INTEGER" property="bookId" />
+    <association column="publishId" javaType="publish" property="publish">
+      <id column="pubId" jdbcType="INTEGER" property="pubId" />
+    </association>
+  </resultMap>
+  <insert id="insert" parameterType="Book">
+    insert into book (bookName, publishId,
+      createDate,pic)
+    values (#{bookName,jdbcType=VARCHAR}, #{publishId,jdbcType=INTEGER},
+      #{createDate,jdbcType=TIMESTAMP},#{pic})
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select b.*,pub.* from book b,publish pub
+where b.publishId = pub.pubId
+  </select>
+
+  <select id="findByID" parameterType="int" resultType="book">
+    select * from book where bookId = #{bookId}
+  </select>
+    <select id="findByPage" resultMap="BaseResultMap" parameterType="SelectBook">
+ select b.*,pub.* from book b,publish pub
+  where b.publishId = pub.pubId
+  <trim>
+       <if test="bookId != null">
+          and b.bookId = #{bookId}
+       </if>
+        <if test="bookName != null">
+            and b.bookName = #{bookName}
+        </if>
+        <if test="publishId != null">
+            and b.publishId = #{publishId}
+        </if>
+  </trim>
+  limit #{start},#{pageSize}
+
+    </select>
+    <select id="findByPageNum" resultType="java.lang.Long" parameterType="SelectBook">
+        select count(b.bookId) from book b,publish pub
+        where b.publishId = pub.pubId
+        <trim>
+            <if test="bookId != null">
+                and b.bookId = #{bookId}
+            </if>
+            <if test="bookName != null">
+                and b.bookName = #{bookName}
+            </if>
+            <if test="publishId != null">
+                and b.publishId = #{publishId}
+            </if>
+        </trim>
+    </select>
+    <delete id="del" parameterType="int">
+    delete from book where bookId = #{bookId}
+  </delete>
+  <update id="update" parameterType="book">
+    update book set bookName= #{bookName},publishId = #{publishId},createDate = #{createDate},pic = #{pic}
+    where bookId = #{bookId}
+  </update>
+</mapper>

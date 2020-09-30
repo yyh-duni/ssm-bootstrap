@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aaa.mapper.PublishMapper">
+
+  <resultMap id="BaseResultMap" type="com.aaa.pojo.Publish">
+    <result column="pubId" jdbcType="INTEGER" property="pubId" />
+    <result column="pubName" jdbcType="VARCHAR" property="pubName" />
+    <result column="pubDate" jdbcType="TIMESTAMP" property="pubDate" />
+  </resultMap>
+  <insert id="insert" parameterType="com.aaa.pojo.Publish">
+    insert into publish (pubId, pubName, pubDate
+      )
+    values (#{pubId,jdbcType=INTEGER}, #{pubName,jdbcType=VARCHAR}, #{pubDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select pubId, pubName, pubDate
+    from publish
+  </select>
+</mapper>
